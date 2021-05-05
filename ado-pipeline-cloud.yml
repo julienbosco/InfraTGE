@@ -38,13 +38,13 @@ jobs:
           PathtoPublish: '$(Build.SourcesDirectory)\DSC\BuildOutput\MetaMOF'
           ArtifactName: 'Meta MOF'
 
-			- task: PublishBuildArtifacts@1
+      - task: PublishBuildArtifacts@1
         displayName: RSOP
         inputs:
           PathtoPublish: '$(Build.SourcesDirectory)\DSC\BuildOutput\RSOP'
           ArtifactName: RSOP
 
-			- task: PublishBuildArtifacts@1
+      - task: PublishBuildArtifacts@1
         condition: and(succeeded(), not(startsWith(variables['BHCommitMessage'], '--Added new node')))
       	displayName: 'Compressed Modules'
       	inputs:
