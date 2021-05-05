@@ -3,8 +3,7 @@ name: $(BuildID)
 trigger:
   - 'dev'
 
-pool:
-  name: TGE
+pool: TGE # Directement sur la même ligne lorsque pool privée
 
 jobs:
   - job: DscBuild
