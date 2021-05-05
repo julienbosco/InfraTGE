@@ -1,0 +1,17 @@
+NodeName: DC01-DEV
+Environment: Dev
+Role: ServerBaseline
+Description: 'Initial Test'
+Location: Sherbrooke
+
+NetworkIpConfiguration:
+  Interfaces:
+    - InterfaceAlias: Ethernet
+      IpAddress: 192.168.111.100
+      Prefix: 24
+      Gateway: 192.168.111.50
+      DnsServer:
+        - 192.168.111.10
+      DisableNetbios: true
+
+PSDscAllowPlainTextPassword: True

@@ -1,0 +1,12 @@
+Configurations:
+- ADdsDomainController
+
+AddsDomainController:
+  DomainName: dev.tge
+  Credential: ''
+  SafeModeAdministratorPassword: ''
+  DatabasePath: C:\Windows\NTDS
+  LogPath: C:\Windows\Logs
+  SysvolPath: C:\Windows\SYSVOL
+  SiteName: DEV-TGE
+  IsGlobalCatalog: True

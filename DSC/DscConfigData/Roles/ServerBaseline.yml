@@ -1,0 +1,20 @@
+Configurations:
+  - SecurityBase
+  - WindowsFeatures
+  - NetworkIpConfiguration
+  - RegistryValues
+
+WindowsFeatures:
+  Name:
+    - -Telnet-Client
+
+SecurityBase:
+  Role: Baseline
+
+RegistryValues:
+  Values:
+  - Key: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters
+    ValueName: NtpServer
+    ValueData: pool.contoso.local,0x2
+    ValueType: DWORD
+    Ensure: Present
