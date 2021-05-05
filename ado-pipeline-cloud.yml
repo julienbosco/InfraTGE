@@ -18,7 +18,7 @@ jobs:
       - powershell: '.\Build.ps1 -ResolveDependancy'
         workingDirectory: DSC
         displayName: 'Execution de Build.ps1'
-      
+
       - task: PublishTestResults@2
         displayName: "Affichage des résultats des tests d'intégration"
         inputs:
@@ -37,7 +37,7 @@ jobs:
         inputs:
           PathtoPublish: '$(Build.SourcesDirectory)\DSC\BuildOutput\MetaMOF'
           ArtifactName: 'Meta MOF'
-			
+
 			- task: PublishBuildArtifacts@1
         displayName: RSOP
         inputs:
@@ -45,7 +45,7 @@ jobs:
           ArtifactName: RSOP
 
 			- task: PublishBuildArtifacts@1
-      	condition: and(succeeded(), not(startsWith(variables['BHCommitMessage'], '--Added new node')))
+        condition: and(succeeded(), not(startsWith(variables['BHCommitMessage'], '--Added new node')))
       	displayName: 'Compressed Modules'
       	inputs:
         	PathtoPublish: '$(Build.SourcesDirectory)\DSC\BuildOutput\CompressedModules'
