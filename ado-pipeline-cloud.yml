@@ -9,8 +9,6 @@ jobs:
   - job: DscBuild
     strategy:
       parallel: 1
-    pool:
-      name: Default
     workspace:
       clean: all
     steps:
