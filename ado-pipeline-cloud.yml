@@ -55,8 +55,8 @@ jobs:
           testResultsFiles: '**/BuildAcceptanceTestResults.xml'
           failTaskOnFailedTests: true
 
-      - task: CopyFiles@2
+      - task: PublishBuildArtifacts@1
         displayName: 'Copie le fichier de déploiement de lab'
         inputs:
-          Contents: 'LabDeploy.ps1'
-          TargetFolder: '$(Build.SourcesDirectory)'
+          Contents: '$(Build.SourcesDirectory)\LabDeploy.ps1'
+          TargetFolder: 'Scripts'
