@@ -54,3 +54,9 @@ jobs:
           testResultsFormat: NUnit
           testResultsFiles: '**/BuildAcceptanceTestResults.xml'
           failTaskOnFailedTests: true
+
+      - task: CopyFiles@2
+        displayName: 'Copie le fichier de déploiement de lab'
+        inputs:
+          Contents: 'LabDeploy.ps1'
+          TargetFolder: '$(Build.SourcesDirectory)'
