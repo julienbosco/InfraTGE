@@ -12,7 +12,7 @@ jobs:
     workspace:
       clean: all
     steps:
-      - powershell: '.\Build.ps1 -ResolveDependancy'
+      - powershell: '.\Build.ps1 -ResolveDependency'
         workingDirectory: DSC
         displayName: 'Execution de Build.ps1'
 
