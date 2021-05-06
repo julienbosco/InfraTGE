@@ -58,5 +58,5 @@ jobs:
       - task: PublishBuildArtifacts@1
         displayName: 'Copie le fichier de déploiement de lab'
         inputs:
-          Contents: '$(Build.SourcesDirectory)\LabDeploy.ps1'
+          Contents: '$(Build.SourcesDirectory)\Scripts'
           TargetFolder: 'Scripts'
