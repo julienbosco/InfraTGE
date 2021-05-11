@@ -38,18 +38,8 @@ DscLcmController:
 
 LcmConfig:
   Settings:
-    RefreshMode: Pull
-    RefreshFrequencyMins: 30
-    RebootNodeIfNeeded: true
-    ActionAfterReboot: ContinueConfiguration
-    AllowModuleOverwrite: true
+    RefreshMode: Push
     #CertificateID: ...
-    ConfigurationMode: ApplyAndMonitor
-    ConfigurationModeFrequencyMins: 30
-  ConfigurationRepositoryWeb:
-    Server:
-      ServerURL: https://dscpull01.contoso.com:8080/PSDSCPullServer.svc
-      RegistrationKey: ec717ee9-b343-49ee-98a2-26e53939eecf
-  ReportServerWeb:
-      ServerURL: https://dscpull01.contoso.com:8080/PSDSCPullServer.svc
-      RegistrationKey: ec717ee9-b343-49ee-98a2-26e53939eecf
+  ConfigurationRepositoryShare:
+    SourcePath: \\FILE01-DEV\Modules
+
