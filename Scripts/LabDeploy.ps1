@@ -32,7 +32,7 @@ Invoke-LabCommand -ComputerName PUSH01-DEV -ScriptBlock {
     New-Item -Path "C:\MODULES" -ItemType Directory
     New-SmbShare -Name MODULES -Path "C:\MODULES" -ReadAccess Everyone
 }
-Copy-LabFileItem -Path "C:\DSC\CModules\*" -ComputerName PUSH01-DEV -DestinationFolder "C:\MODULES"
+Copy-LabFileItem -Path "C:\DSC\Compressed Modules\*" -ComputerName PUSH01-DEV -DestinationFolder "C:\MODULES"
 Invoke-LabCommand -ComputerName DC01-DEV -ScriptBlock { Start-DscConfiguration -Path "C:\DSC"}
 Show-LabDeploymentSummary
 
