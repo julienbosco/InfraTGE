@@ -54,9 +54,8 @@ jobs:
           testResultsFormat: NUnit
           testResultsFiles: '**/BuildAcceptanceTestResults.xml'
           failTaskOnFailedTests: true
-
       - task: PublishBuildArtifacts@1
-        displayName: 'Copie le fichier de déploiement de lab'
+        displayName: Scripts
         inputs:
-          Contents: '$(Build.SourcesDirectory)\Scripts'
-          TargetFolder: 'Scripts'
+          PathtoPublish: '$(Build.SourcesDirectory)\Scripts'
+          ArtifactName: Scripts
