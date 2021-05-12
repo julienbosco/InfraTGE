@@ -40,6 +40,5 @@ LcmConfig:
   Settings:
     RefreshMode: Push
     #CertificateID: ...
-  ConfigurationRepositoryShare:
+  ResourceRepositoryShare:
     SourcePath: \\FILE01-DEV\Modules
-
