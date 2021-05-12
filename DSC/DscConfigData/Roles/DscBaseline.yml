@@ -39,6 +39,8 @@ DscLcmController:
 LcmConfig:
   Settings:
     RefreshMode: Push
+    ConfigurationMode: ApplyAndMonitor
+    ConfigurationModeFrequencyMins: 15
     #CertificateID: ...
   ResourceRepositoryShare:
     SourcePath: \\FILE01-DEV\Modules
