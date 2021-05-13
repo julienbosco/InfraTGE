@@ -43,4 +43,4 @@ LcmConfig:
     ConfigurationModeFrequencyMins: 15
     #CertificateID: ...
   ResourceRepositoryShare:
-    SourcePath: \\PUSH01-DEV\MODULES
+    SourcePath: \\LAB01\MODULES
