@@ -15,3 +15,7 @@ NetworkIpConfiguration:
       DisableNetbios: true
 
 PSDscAllowPlainTextPassword: True
+
+LcmConfig:
+  Settings:
+    ConfigurationID: '3a15d863-bd25-432c-9e45-9199afecde91'
