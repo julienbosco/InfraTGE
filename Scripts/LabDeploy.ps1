@@ -1,39 +1,46 @@
+Write-Host "Construction ou mise à jour de TGELAB"
+
+
 try {
+    Write-Host "Tentative d'importation du laboratoire"
     $tgelab = Import-Lab -Name TGELAB
 }
 catch { # Lab n'existe pas
+    Write-Host "Laboration n'existant pas, création du laboratoire TGELAB"
     New-LabDefinition -Name TGELAB -DefaultVirtualizationEngine HyperV
+    Add-LabVirtualNetworkDefinition -Name 'LAN' -AddressSpace 192.168.111.0/24
 }
 
+Write-Host "Ajout des VMs au laboratoire"
 # Récupération des définitions DSC
 Get-ChildItem -Path "C:\DSC\MOF\*" -Include *-DEV.mof | ForEach-Object {
-    try {
-        Get-LabVM -ComputerName $_.Name
-    } catch {
-        Add-LabMachineDefinition -Name $_.Name -OperatingSystem 'Windows Server 2019 Standard'
+    $vmname = $_.BaseName
+    Write-Host "Vérification de l'existance de $vmname"
+    $vm = Get-LabVM -ComputerName $vmname
+    if (-not $vm) {
+        Write-Host "$vmname n'existe pas, création en cours..."
+        Add-LabMachineDefinition -Name $vmname -OperatingSystem 'Windows Server 2019 Standard' -Network LAN -IpAddress 192.168.111.100
     }
 }
 
-try {
-    Get-LabVM -ComputerName PUSH01-DEV
-}
-catch {
-    Add-LabDiskDefinition -Name PUSH-HDD -DiskSizeInGb 30
-    Add-LabMachineDefinition -Name "PUSH01-DEV" -OperatingSystem 'Windows Server 2019 Standard' -Roles FileServer -DiskName PUSH-HDD
-}
+Write-Host "Installation du laboratoire en cours"
 Install-Lab
 
+Write-Host "Transfert des modules compressés vers chaque VM"
 #Transfert des fichiers DSC vers les VMs
 ForEach ($vm in Get-LabVM) {
-    Copy-LabFileItem -Path "C:\DSC\MOF\$vm.Name.mof" -ComputerName $vm.Name -DestinationFolder "C:\DSC"
+    $vmname = $vm
+    Write-Host "Transfert vers $vmname"
+    Copy-LabFileItem -Path "C:\DSC\Compressed Modules" -ComputerName $vm -DestinationFolder "C:\DSC\"
+    Write-Host "Création du share local pour $vmname"
+    Invoke-LabCommand -ComputerName $vm -ScriptBlock {
+        New-SmbShare -Name MODULES -Path "C:\DSC\Compressed Modules" -ReadAccess Everyone
+    }
+    Write-Host "Mise à jour du LCM sur $vmname"
+    $c = New-LabCimSession -ComputerName $vm
+    Set-DscLocalConfigurationManager -CimSession $c -Path "C:\DSC\Meta Mof" -Verbose
+    Start-DscConfiguration -CimSession $c -Path "C:\DSC\MOF" -Wait -Verbose -Force
 }
 
-Invoke-LabCommand -ComputerName PUSH01-DEV -ScriptBlock {
-    New-Item -Path "C:\MODULES" -ItemType Directory
-    New-SmbShare -Name MODULES -Path "C:\MODULES" -ReadAccess Everyone
-}
-Copy-LabFileItem -Path "C:\DSC\Compressed Modules\*" -ComputerName PUSH01-DEV -DestinationFolder "C:\MODULES"
-Invoke-LabCommand -ComputerName DC01-DEV -ScriptBlock { Start-DscConfiguration -Path "C:\DSC"}
-Show-LabDeploymentSummary
 
 
